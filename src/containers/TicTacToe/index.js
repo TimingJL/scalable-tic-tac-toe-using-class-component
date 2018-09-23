@@ -7,16 +7,31 @@ import { StyledTicTacToe } from './Styled';
 import {
     makeSelectGameScale,
     makeSelectBlocks,
+    makeSelectCurrentRole,
 } from './selectors';
+import {
+    setBlockValue,
+} from './actions';
 
 class TicTacToe extends React.Component {
     static propTypes = {
         gameScale: PropTypes.number,
         blocks: PropTypes.object,
+        currentRole: PropTypes.number,
+        handleOnBlockClicked: PropTypes.func,
     };
     static defaultProps = {
         gameScale: 3,
         blocks: null,
+        currentRole: 0,
+        handleOnBlockClicked: () => { },
+    }
+    handleOnClick = (event) => {
+        const { blocks, currentRole, handleOnBlockClicked } = this.props;
+        const id = event.currentTarget.getAttribute('data-id');
+        if (!blocks.getIn([id, 'owner'])) {
+            handleOnBlockClicked(id, currentRole);
+        }
     }
 
     render() {
@@ -24,16 +39,18 @@ class TicTacToe extends React.Component {
             gameScale,
             blocks,
         } = this.props;
-        console.log('blocks: ', blocks.size);
+
         return (
             <StyledTicTacToe gameScale={gameScale}>
                 {
                     blocks.map((block) => (
                         <div
                             key={block.get('id')}
+                            data-id={block.get('id')}
                             className="tic-tac-toe__item"
+                            onClick={this.handleOnClick}
                         >
-                            {block.get('id')}
+                            {block.get('owner')}
                         </div>
                     ))
                 }
@@ -45,10 +62,12 @@ class TicTacToe extends React.Component {
 const mapStateToProps = createStructuredSelector({
     gameScale: makeSelectGameScale(),
     blocks: makeSelectBlocks(),
+    currentRole: makeSelectCurrentRole(),
 });
 
 const mapDispatchToProps = dispatch => ({
-
+    handleOnBlockClicked: (id, currentRole) =>
+        dispatch(setBlockValue(id, currentRole)),
 });
 
 export default connect(

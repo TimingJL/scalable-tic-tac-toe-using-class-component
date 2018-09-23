@@ -12,7 +12,13 @@ const makeSelectBlocks = () =>
         tictactoeState.get('blocks'),
     );
 
+const makeSelectCurrentRole = () =>
+    createSelector(selectTicTacToe, tictactoeState =>
+        tictactoeState.get('currentRole'),
+    );
+
 export {
     makeSelectGameScale,
     makeSelectBlocks,
+    makeSelectCurrentRole,
 };
