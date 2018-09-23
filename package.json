@@ -4,9 +4,21 @@
   "private": true,
   "homepage": "https://timingjl.github.io/tic-tac-toe",
   "dependencies": {
+    "eslint": "^5.6.0",
+    "history": "^4.7.2",
+    "immutable": "^3.8.2",
     "react": "^16.5.2",
     "react-dom": "^16.5.2",
-    "react-scripts": "1.1.5"
+    "react-redux": "^5.0.7",
+    "react-scripts": "1.1.5",
+    "redux": "^4.0.0",
+    "redux-devtools": "^3.4.1",
+    "redux-immutable": "^4.0.0",
+    "redux-observable": "^1.0.0",
+    "reselect": "^3.0.1",
+    "rxjs": "^6.3.2",
+    "rxjs-compat": "^6.3.2",
+    "styled-components": "^3.4.9"
   },
   "scripts": {
     "start": "react-scripts start",
