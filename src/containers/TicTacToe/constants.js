@@ -7,3 +7,5 @@ export const CIRCLE = 1;
 export const CROSS = -1;
 export const TOGGLE = -1;
 export const PLAYER_1 = CIRCLE;
+
+export const GAME_WRAPPER_SIZE = 600;

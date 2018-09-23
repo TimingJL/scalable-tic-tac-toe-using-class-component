@@ -12,6 +12,22 @@ import {
 import {
     setBlockValue,
 } from './actions';
+import {
+    CIRCLE,
+    CROSS,
+} from './constants';
+
+import Circle from './components/Circle';
+import Cross from './components/Cross';
+
+const showContent = (value) => {
+    if (value === CIRCLE) {
+        return <Circle />
+    } else if (value === CROSS) {
+        return <Cross />
+    }
+    return null;
+}
 
 class TicTacToe extends React.Component {
     static propTypes = {
@@ -50,7 +66,7 @@ class TicTacToe extends React.Component {
                             className="tic-tac-toe__item"
                             onClick={this.handleOnClick}
                         >
-                            {block.get('owner')}
+                            {showContent(block.get('owner'))}
                         </div>
                     ))
                 }
