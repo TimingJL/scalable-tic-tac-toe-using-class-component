@@ -23,7 +23,7 @@ export const StyledTicTacToe = styled.div`
             return `
                 grid-template-columns: repeat(${gameScale}, 1fr);
                 grid-template-rows: repeat(${gameScale}, 1fr);
-                grid-gap: 15px 15px;
+                grid-gap: ${45/gameScale}px ${45/gameScale}px;
             `;
         }}
     }

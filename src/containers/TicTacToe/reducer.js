@@ -2,6 +2,7 @@ import { fromJS } from 'immutable';
 import {
     INIT,
     SET_BLOCK_VALUE,
+    SET_GAME_SCALE,
     TOGGLE,
     PLAYER_1,
 } from './constants';
@@ -20,7 +21,7 @@ function tictactoeReducer(state = initialState, action) {
         case INIT: {
             const isSinglePlayer = state.get('isSinglePlayer');
             const gameScale = state.get('gameScale');
-            return initialState
+            return state
                 .set('isSinglePlayer', isSinglePlayer)
                 .set('blocks', fromJS(
                     Array.from(new Array(gameScale * gameScale), (value, index) => ({
@@ -35,6 +36,12 @@ function tictactoeReducer(state = initialState, action) {
             return state
                 .setIn(['blocks', id, 'owner'], currentRole)
                 .set('currentRole', currentRole * TOGGLE);
+        }
+
+        case SET_GAME_SCALE: {
+            const gameScale = action.payload;
+            return state
+                    .set('gameScale', gameScale);
         }
 
         default:

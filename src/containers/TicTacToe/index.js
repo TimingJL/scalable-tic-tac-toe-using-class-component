@@ -12,6 +12,7 @@ import {
 import {
     setBlockValue,
     setInit,
+    setGameScale,
 } from './actions';
 import {
     CIRCLE,
@@ -20,6 +21,7 @@ import {
 
 import Circle from './components/Circle';
 import Cross from './components/Cross';
+import GameScaleSelection from './components/GameScaleSelection';
 
 const showContent = (value) => {
     if (value === CIRCLE) {
@@ -37,6 +39,7 @@ class TicTacToe extends React.Component {
         currentRole: PropTypes.number,
         handleOnBlockClicked: PropTypes.func,
         handleOnRestartGame: PropTypes.func,
+        handleOnSetGameScale: PropTypes.func,
     };
     static defaultProps = {
         gameScale: 3,
@@ -44,6 +47,7 @@ class TicTacToe extends React.Component {
         currentRole: 0,
         handleOnBlockClicked: () => { },
         handleOnRestartGame: () => { },
+        handleOnSetGameScale: () => { },
     }
     handleOnClick = (event) => {
         const { blocks, currentRole, handleOnBlockClicked } = this.props;
@@ -51,6 +55,11 @@ class TicTacToe extends React.Component {
         if (!blocks.getIn([id, 'owner'])) {
             handleOnBlockClicked(id, currentRole);
         }
+    }
+    handleOnGameScaleSelected = (event) => {
+        const { handleOnSetGameScale } = this.props;
+        const gameScale = parseInt(event.target.value, 10);
+        handleOnSetGameScale(gameScale);
     }
     handleOnRestart = () => {
         const { handleOnRestartGame } = this.props;
@@ -85,6 +94,7 @@ class TicTacToe extends React.Component {
                 >
                     Restart
                 </button>
+                <GameScaleSelection handleOnSelect={this.handleOnGameScaleSelected} />
             </StyledTicTacToe>
         );
     }
@@ -100,6 +110,7 @@ const mapDispatchToProps = dispatch => ({
     handleOnBlockClicked: (id, currentRole) =>
         dispatch(setBlockValue(id, currentRole)),
     handleOnRestartGame: () => dispatch(setInit()),
+    handleOnSetGameScale: (gameScale) => dispatch(setGameScale(gameScale)),
 });
 
 export default connect(

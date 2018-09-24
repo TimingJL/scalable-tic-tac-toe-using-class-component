@@ -1,6 +1,7 @@
 import {
     INIT,
     SET_BLOCK_VALUE,
+    SET_GAME_SCALE,
 } from './constants';
 
 export const setInit = () => ({
@@ -13,4 +14,9 @@ export const setBlockValue = (id, currentRole) => ({
         id,
         currentRole,
     },
+});
+
+export const setGameScale = (payload) => ({
+    type: SET_GAME_SCALE,
+    payload,
 });
