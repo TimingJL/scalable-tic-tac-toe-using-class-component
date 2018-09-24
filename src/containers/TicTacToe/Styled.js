@@ -14,17 +14,19 @@ const crossMixin = (gameScale, angle) => `
 `;
 
 export const StyledTicTacToe = styled.div`
-    width: ${GAME_WRAPPER_SIZE}px;
-    height: ${GAME_WRAPPER_SIZE}px;
-    display: grid;
-    ${(props) => {
-        const gameScale = props.gameScale;
-        return `
-            grid-template-columns: repeat(${gameScale}, 1fr);
-            grid-template-rows: repeat(${gameScale}, 1fr);
-            grid-gap: 15px 15px;
-        `;
-    }}
+    .tic-tac-toe__blocks-wrapper {
+        width: ${GAME_WRAPPER_SIZE}px;
+        height: ${GAME_WRAPPER_SIZE}px;
+        display: grid;
+        ${(props) => {
+            const gameScale = props.gameScale;
+            return `
+                grid-template-columns: repeat(${gameScale}, 1fr);
+                grid-template-rows: repeat(${gameScale}, 1fr);
+                grid-gap: 15px 15px;
+            `;
+        }}
+    }
     .tic-tac-toe__item {
         outline: none;
         display: flex;
@@ -84,6 +86,26 @@ export const StyledTicTacToe = styled.div`
                     return crossMixin(gameScale, -45);
                 }}
             }
+        }
+    }
+    .tic-tac-toe__restart-btn {
+        font-family: 'Rammetto One', cursive;
+        width: 100%;
+        line-height: 50px;
+        font-size: 1.5em;
+        letter-spacing: 1px;
+        background: white;
+        cursor: pointer;
+        outline: none;
+        margin: 20px 0px;
+        padding: 5px 0px;
+        border-radius: 5px;
+        border: none;
+        transition: all 0.25s ease-out;
+        &:hover {
+            box-shadow: 0 10px 20px 0 #e2a900;
+            transform: translateY(-1px);
+            color: #ff4f6e;
         }
     }
 `;

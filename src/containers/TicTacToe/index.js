@@ -11,6 +11,7 @@ import {
 } from './selectors';
 import {
     setBlockValue,
+    setInit,
 } from './actions';
 import {
     CIRCLE,
@@ -35,12 +36,14 @@ class TicTacToe extends React.Component {
         blocks: PropTypes.object,
         currentRole: PropTypes.number,
         handleOnBlockClicked: PropTypes.func,
+        handleOnRestartGame: PropTypes.func,
     };
     static defaultProps = {
         gameScale: 3,
         blocks: null,
         currentRole: 0,
         handleOnBlockClicked: () => { },
+        handleOnRestartGame: () => { },
     }
     handleOnClick = (event) => {
         const { blocks, currentRole, handleOnBlockClicked } = this.props;
@@ -48,6 +51,10 @@ class TicTacToe extends React.Component {
         if (!blocks.getIn([id, 'owner'])) {
             handleOnBlockClicked(id, currentRole);
         }
+    }
+    handleOnRestart = () => {
+        const { handleOnRestartGame } = this.props;
+        handleOnRestartGame();
     }
 
     render() {
@@ -58,18 +65,26 @@ class TicTacToe extends React.Component {
 
         return (
             <StyledTicTacToe gameScale={gameScale}>
-                {
-                    blocks.map((block) => (
-                        <div
-                            key={block.get('id')}
-                            data-id={block.get('id')}
-                            className="tic-tac-toe__item"
-                            onClick={this.handleOnClick}
-                        >
-                            {showContent(block.get('owner'))}
-                        </div>
-                    ))
-                }
+                <div className="tic-tac-toe__blocks-wrapper">
+                    {
+                        blocks.map((block) => (
+                            <div
+                                key={block.get('id')}
+                                data-id={block.get('id')}
+                                className="tic-tac-toe__item"
+                                onClick={this.handleOnClick}
+                            >
+                                {showContent(block.get('owner'))}
+                            </div>
+                        ))
+                    }
+                </div>
+                <button
+                    className="tic-tac-toe__restart-btn"
+                    onClick={this.handleOnRestart}
+                >
+                    Restart
+                </button>
             </StyledTicTacToe>
         );
     }
@@ -84,6 +99,7 @@ const mapStateToProps = createStructuredSelector({
 const mapDispatchToProps = dispatch => ({
     handleOnBlockClicked: (id, currentRole) =>
         dispatch(setBlockValue(id, currentRole)),
+    handleOnRestartGame: () => dispatch(setInit()),
 });
 
 export default connect(
