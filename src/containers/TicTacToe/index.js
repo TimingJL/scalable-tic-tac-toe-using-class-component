@@ -13,6 +13,7 @@ import {
     setBlockValue,
     setInit,
     setGameScale,
+    setWinnerCondition,
 } from './actions';
 import {
     CIRCLE,
@@ -22,6 +23,7 @@ import {
 import Circle from './components/Circle';
 import Cross from './components/Cross';
 import GameScaleSelection from './components/GameScaleSelection';
+import WinnerConditionSelection from './components/WinnerConditionSelection';
 
 const showContent = (value) => {
     if (value === CIRCLE) {
@@ -40,6 +42,7 @@ class TicTacToe extends React.Component {
         handleOnBlockClicked: PropTypes.func,
         handleOnRestartGame: PropTypes.func,
         handleOnSetGameScale: PropTypes.func,
+        handleOnSetWinnerCondition: PropTypes.func,
     };
     static defaultProps = {
         gameScale: 3,
@@ -48,6 +51,7 @@ class TicTacToe extends React.Component {
         handleOnBlockClicked: () => { },
         handleOnRestartGame: () => { },
         handleOnSetGameScale: () => { },
+        handleOnSetWinnerCondition: () => { },
     }
     handleOnClick = (event) => {
         const { blocks, currentRole, handleOnBlockClicked } = this.props;
@@ -60,6 +64,11 @@ class TicTacToe extends React.Component {
         const { handleOnSetGameScale } = this.props;
         const gameScale = parseInt(event.target.value, 10);
         handleOnSetGameScale(gameScale);
+    }
+    handleOnWinnerConditionSelected = (event) => {
+        const { handleOnSetWinnerCondition } = this.props;
+        const winnerCondition = parseInt(event.target.value, 10);
+        handleOnSetWinnerCondition(winnerCondition);
     }
     handleOnRestart = () => {
         const { handleOnRestartGame } = this.props;
@@ -94,7 +103,10 @@ class TicTacToe extends React.Component {
                 >
                     Restart
                 </button>
+                Scale
                 <GameScaleSelection handleOnSelect={this.handleOnGameScaleSelected} />
+                Condition
+                <WinnerConditionSelection gameScale={gameScale} handleOnSelect={this.handleOnWinnerConditionSelected} />
             </StyledTicTacToe>
         );
     }
@@ -111,6 +123,7 @@ const mapDispatchToProps = dispatch => ({
         dispatch(setBlockValue(id, currentRole)),
     handleOnRestartGame: () => dispatch(setInit()),
     handleOnSetGameScale: (gameScale) => dispatch(setGameScale(gameScale)),
+    handleOnSetWinnerCondition: (winnerCondition) => dispatch(setWinnerCondition(winnerCondition)),
 });
 
 export default connect(

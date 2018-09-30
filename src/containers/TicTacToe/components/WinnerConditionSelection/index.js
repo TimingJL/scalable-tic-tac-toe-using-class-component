@@ -1,10 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { DEFAULT_NUM_OF_BLOCK } from 'containers/TicTacToe/constants';
+import { DEFAULT_WINNER_CONDITION } from 'containers/TicTacToe/constants';
 import _ from 'lodash';
 
-const GameScaleSelection = ({ handleOnSelect }) => {
-    const options = _.range(DEFAULT_NUM_OF_BLOCK, 20 + 1);
+const WinnerConditionSelection = ({ gameScale, handleOnSelect }) => {
+    const options = _.range(DEFAULT_WINNER_CONDITION, gameScale + 1);
     return (
         <select onChange={handleOnSelect}>
             {
@@ -21,12 +21,12 @@ const GameScaleSelection = ({ handleOnSelect }) => {
     )
 }
 
-GameScaleSelection.propTypes = {
+WinnerConditionSelection.propTypes = {
     handleOnSelect: PropTypes.func,
 };
 
-GameScaleSelection.defaultProps = {
+WinnerConditionSelection.defaultProps = {
     handleOnSelect: () => { },
 }
 
-export default GameScaleSelection;
+export default WinnerConditionSelection;
