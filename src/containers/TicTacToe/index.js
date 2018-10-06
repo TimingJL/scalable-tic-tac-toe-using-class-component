@@ -111,7 +111,7 @@ class TicTacToe extends React.Component {
                                 key={block.get('id')}
                                 data-id={block.get('id')}
                                 className={blockStyle(block.get('id'), isWin.get('winCaseArr'))}
-                                onClick={isWin.get('isGameFinished') ? () => {} : this.handleOnClick}
+                                onClick={isWin.get('isGameFinished') ? () => { } : this.handleOnClick}
                             >
                                 {showContent(block.get('owner'))}
                             </div>
@@ -124,10 +124,19 @@ class TicTacToe extends React.Component {
                 >
                     Restart
                 </button>
-                Scale
-                <GameScaleSelection handleOnSelect={this.handleOnGameScaleSelected} />
-                Condition
-                <WinnerConditionSelection gameScale={gameScale} handleOnSelect={this.handleOnWinnerConditionSelected} />
+                <div className="tic-tac-toe__setting-group-wrapper">
+                    <div className="tic-tac-toe__setting-group">
+                        <span>Scale</span>
+                        <GameScaleSelection handleOnSelect={this.handleOnGameScaleSelected} />
+                    </div>
+                    <div className="tic-tac-toe__setting-group">
+                        <span>Condition</span>
+                        <WinnerConditionSelection gameScale={gameScale} handleOnSelect={this.handleOnWinnerConditionSelected} />
+                    </div>
+                    <div className="tic-tac-toe__setting-group">
+                        <span>Single Play</span>
+                    </div>
+                </div>
             </StyledTicTacToe>
         );
     }

@@ -125,4 +125,21 @@ export const StyledTicTacToe = styled.div`
             color: #ff4f6e;
         }
     }
+    .tic-tac-toe__setting-group-wrapper {
+        display: flex;
+        justify-content: space-between;
+        font-family: 'Rammetto One', cursive;
+    }
+    .tic-tac-toe__setting-group {
+        display: flex;
+        align-items: center;
+        span {
+            margin-right: 5px;
+        }
+        select {
+            font-size: 1.2em;
+            outline: none;
+            background: white;
+        }
+    }
 `;
