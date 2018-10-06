@@ -1,7 +1,17 @@
-import styled from 'styled-components';
+import styled, { keyframes } from 'styled-components';
 import {
     GAME_WRAPPER_SIZE,
 } from './constants';
+
+const winnerBackground = keyframes`
+    from {
+        background: #ff4f6e;
+    }
+
+    to {
+        background: #ff99ab;
+    }
+`;
 
 const crossMixin = (gameScale, angle) => `
     content: '';
@@ -41,6 +51,9 @@ export const StyledTicTacToe = styled.div`
         &:hover {
             background: #ff4f6e;
         }
+    }
+    .tic-tac-toe__item-win {
+        animation: ${winnerBackground} 0.5s linear infinite alternate;
     }
     .tic-tac-toe__circle-wrapper {
         height: 80%;

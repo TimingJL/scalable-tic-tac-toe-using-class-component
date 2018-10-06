@@ -17,8 +17,14 @@ const makeSelectCurrentRole = () =>
         tictactoeState.get('currentRole'),
     );
 
+const makeSelectIsWin = () =>
+    createSelector(selectTicTacToe, tictactoeState =>
+        tictactoeState.get('isWin'),
+    );
+
 export {
     makeSelectGameScale,
     makeSelectBlocks,
     makeSelectCurrentRole,
+    makeSelectIsWin,
 };

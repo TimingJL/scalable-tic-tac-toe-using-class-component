@@ -3,6 +3,7 @@ import {
     SET_BLOCK_VALUE,
     SET_GAME_SCALE,
     SET_WINNER_CONDITION,
+    SET_WINNER,
 } from './constants';
 
 export const setInit = () => ({
@@ -25,4 +26,9 @@ export const setGameScale = (payload) => ({
 export const setWinnerCondition = (payload) => ({
     type: SET_WINNER_CONDITION,
     payload,
+});
+
+export const setWinner = (isWin) => ({
+    type: SET_WINNER,
+    payload: isWin,
 });

@@ -2,12 +2,14 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
+import { List, Map } from 'immutable';
 
 import { StyledTicTacToe } from './Styled';
 import {
     makeSelectGameScale,
     makeSelectBlocks,
     makeSelectCurrentRole,
+    makeSelectIsWin,
 } from './selectors';
 import {
     setBlockValue,
@@ -34,11 +36,28 @@ const showContent = (value) => {
     return null;
 }
 
+const blockStyle = (id, winCaseArrs) => {
+    let isWinnerBlock = false;
+    if (winCaseArrs.size) {
+        winCaseArrs.forEach((winCaseArr) => {
+            if (winCaseArr.includes(id)) {
+                isWinnerBlock = true;
+            }
+        });
+    }
+
+    if (isWinnerBlock) {
+        return 'tic-tac-toe__item tic-tac-toe__item-win';
+    }
+    return 'tic-tac-toe__item';
+};
+
 class TicTacToe extends React.Component {
     static propTypes = {
         gameScale: PropTypes.number,
-        blocks: PropTypes.object,
+        blocks: PropTypes.instanceOf(List),
         currentRole: PropTypes.number,
+        isWin: PropTypes.instanceOf(Map),
         handleOnBlockClicked: PropTypes.func,
         handleOnRestartGame: PropTypes.func,
         handleOnSetGameScale: PropTypes.func,
@@ -46,8 +65,9 @@ class TicTacToe extends React.Component {
     };
     static defaultProps = {
         gameScale: 3,
-        blocks: null,
+        blocks: List(),
         currentRole: 0,
+        isWin: Map(),
         handleOnBlockClicked: () => { },
         handleOnRestartGame: () => { },
         handleOnSetGameScale: () => { },
@@ -79,6 +99,7 @@ class TicTacToe extends React.Component {
         const {
             gameScale,
             blocks,
+            isWin,
         } = this.props;
 
         return (
@@ -89,8 +110,8 @@ class TicTacToe extends React.Component {
                             <div
                                 key={block.get('id')}
                                 data-id={block.get('id')}
-                                className="tic-tac-toe__item"
-                                onClick={this.handleOnClick}
+                                className={blockStyle(block.get('id'), isWin.get('winCaseArr'))}
+                                onClick={isWin.get('isGameFinished') ? () => {} : this.handleOnClick}
                             >
                                 {showContent(block.get('owner'))}
                             </div>
@@ -116,6 +137,7 @@ const mapStateToProps = createStructuredSelector({
     gameScale: makeSelectGameScale(),
     blocks: makeSelectBlocks(),
     currentRole: makeSelectCurrentRole(),
+    isWin: makeSelectIsWin(),
 });
 
 const mapDispatchToProps = dispatch => ({

@@ -5,11 +5,18 @@ import {
     SET_BLOCK_VALUE,
     SET_GAME_SCALE,
     SET_WINNER_CONDITION,
+    SET_WINNER,
     TOGGLE,
     PLAYER_1,
     DEFAULT_NUM_OF_BLOCK,
     DEFAULT_WINNER_CONDITION,
 } from './constants';
+
+const defaultIsWin = {
+    winner: '',
+    winCaseArr: [],
+    isGameFinished: false,
+};
 
 const initialState = fromJS({
     gameScale: DEFAULT_NUM_OF_BLOCK,
@@ -17,7 +24,7 @@ const initialState = fromJS({
     blocks: null,
     currentRole: PLAYER_1,
     isSinglePlayer: true,
-    inWin: null,
+    isWin: defaultIsWin,
 });
 
 function tictactoeReducer(state = initialState, action) {
@@ -36,7 +43,7 @@ function tictactoeReducer(state = initialState, action) {
                 .set('isSinglePlayer', isSinglePlayer)
                 .set('currentRole', PLAYER_1)
                 .set('blocks', initBlocks)
-                .set('inWin', getWinner(initBlocks, winnerCondition))
+                .set('isWin', fromJS(getWinner(initBlocks, gameScale, winnerCondition)))
                 .set('winnerCondition', winnerCondition);
         }
 
@@ -48,15 +55,18 @@ function tictactoeReducer(state = initialState, action) {
         }
 
         case SET_GAME_SCALE: {
-            const gameScale = action.payload;
             return state
-                    .set('gameScale', gameScale);
+                .set('gameScale', action.payload);
         }
 
         case SET_WINNER_CONDITION: {
             const winnerCondition = action.payload;
             return state
-                    .set('winnerCondition', winnerCondition);
+                .set('winnerCondition', winnerCondition);
+        }
+
+        case SET_WINNER: {
+            return state.set('isWin', fromJS(action.payload));
         }
 
         default:
@@ -73,7 +83,7 @@ function tictactoeReducer(state = initialState, action) {
                 .set('isSinglePlayer', isSinglePlayer)
                 .set('currentRole', PLAYER_1)
                 .set('blocks', initBlocks)
-                .set('inWin', getWinner(initBlocks, winnerCondition))
+                .set('isWin', fromJS(getWinner(initBlocks, gameScale, winnerCondition)))
                 .set('winnerCondition', winnerCondition);
     }
 }
