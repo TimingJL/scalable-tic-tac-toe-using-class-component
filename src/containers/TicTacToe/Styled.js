@@ -27,6 +27,10 @@ export const StyledTicTacToe = styled.div`
     .tic-tac-toe__blocks-wrapper {
         width: ${GAME_WRAPPER_SIZE}px;
         height: ${GAME_WRAPPER_SIZE}px;
+        @media only screen and (max-width: 600px) {
+            width: calc(100vw - 20px);
+            height: calc(100vw - 20px);
+        }
         display: grid;
         ${(props) => {
             const gameScale = props.gameScale;
