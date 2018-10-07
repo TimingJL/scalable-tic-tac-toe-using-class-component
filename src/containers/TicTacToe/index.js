@@ -29,6 +29,7 @@ import Cross from './components/Cross';
 import GameScaleSelection from './components/GameScaleSelection';
 import WinnerConditionSelection from './components/WinnerConditionSelection';
 import ToggleSwitchBtn from './components/ToggleSwitchBtn';
+import InfoBoard from './components/InfoBoard';
 
 const showContent = (value) => {
     if (value === CIRCLE) {
@@ -114,10 +115,12 @@ class TicTacToe extends React.Component {
             blocks,
             isWin,
             isSinglePlay,
+            currentRole,
         } = this.props;
 
         return (
             <StyledTicTacToe gameScale={gameScale}>
+                <InfoBoard currentRole={currentRole} isWin={isWin} />
                 <div className="tic-tac-toe__blocks-wrapper">
                     {
                         blocks.map((block) => (

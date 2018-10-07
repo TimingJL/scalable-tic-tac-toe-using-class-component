@@ -119,7 +119,7 @@ export const StyledTicTacToe = styled.div`
         background: white;
         cursor: pointer;
         outline: none;
-        margin: 20px 0px;
+        margin: 10px 0px;
         padding: 5px 0px;
         border-radius: 5px;
         border: none;
@@ -133,6 +133,9 @@ export const StyledTicTacToe = styled.div`
     .tic-tac-toe__setting-group-wrapper {
         display: grid;
         grid-template-columns: repeat(2, 1fr);
+        @media only screen and (max-width: 600px) {
+            grid-template-columns: repeat(1, 1fr);
+        }
         grid-template-rows: repeat(2, 40px);
         justify-content: space-between;
         font-family: 'Rammetto One', cursive;
