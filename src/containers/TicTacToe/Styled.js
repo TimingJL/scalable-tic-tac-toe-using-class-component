@@ -1,15 +1,20 @@
 import styled, { keyframes } from 'styled-components';
 import {
+    THEME,
+    THEME_DARKEN,
+    BACKGROUND_COLOR,
+} from 'containers/StyleConstants';
+import {
     GAME_WRAPPER_SIZE,
 } from './constants';
 
 const winnerBackground = keyframes`
     from {
-        background: #ff4f6e;
+        background: ${THEME_DARKEN};
     }
 
     to {
-        background: #ff99ab;
+        background: ${THEME};
     }
 `;
 
@@ -50,10 +55,10 @@ export const StyledTicTacToe = styled.div`
         width: 100%;
         height: 100%;
 
-        background: #ff99ab;
+        background: ${THEME};
         cursor: pointer;
         &:hover {
-            background: #ff4f6e;
+            background: ${THEME_DARKEN};
         }
     }
     .tic-tac-toe__item-win {
@@ -120,13 +125,15 @@ export const StyledTicTacToe = styled.div`
         border: none;
         transition: all 0.25s ease-out;
         &:hover {
-            box-shadow: 0 10px 20px 0 #e2a900;
+            box-shadow: 0 10px 20px 0 ${BACKGROUND_COLOR};
             transform: translateY(-1px);
-            color: #ff4f6e;
+            color: ${THEME_DARKEN};
         }
     }
     .tic-tac-toe__setting-group-wrapper {
-        display: flex;
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        grid-template-rows: repeat(2, 40px);
         justify-content: space-between;
         font-family: 'Rammetto One', cursive;
     }

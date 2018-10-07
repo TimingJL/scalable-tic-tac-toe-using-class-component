@@ -6,6 +6,7 @@ import {
     SET_GAME_SCALE,
     SET_WINNER_CONDITION,
     SET_WINNER,
+    SET_IS_SINGLE_PLAYER,
     TOGGLE,
     PLAYER_1,
     DEFAULT_NUM_OF_BLOCK,
@@ -54,6 +55,10 @@ function tictactoeReducer(state = initialState, action) {
 
         case SET_WINNER: {
             return state.set('isWin', fromJS(action.payload));
+        }
+
+        case SET_IS_SINGLE_PLAYER: {
+            return state.updateIn(['isSinglePlayer'], (isSinglePlayer) => !isSinglePlayer);
         }
 
         default:

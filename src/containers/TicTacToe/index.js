@@ -10,12 +10,14 @@ import {
     makeSelectBlocks,
     makeSelectCurrentRole,
     makeSelectIsWin,
+    makeSelectIsSinglePlayer,
 } from './selectors';
 import {
     setBlockValue,
     setInit,
     setGameScale,
     setWinnerCondition,
+    setIsSinglePlayer,
 } from './actions';
 import {
     CIRCLE,
@@ -26,6 +28,7 @@ import Circle from './components/Circle';
 import Cross from './components/Cross';
 import GameScaleSelection from './components/GameScaleSelection';
 import WinnerConditionSelection from './components/WinnerConditionSelection';
+import ToggleSwitchBtn from './components/ToggleSwitchBtn';
 
 const showContent = (value) => {
     if (value === CIRCLE) {
@@ -58,20 +61,24 @@ class TicTacToe extends React.Component {
         blocks: PropTypes.instanceOf(List),
         currentRole: PropTypes.number,
         isWin: PropTypes.instanceOf(Map),
+        isSinglePlay: PropTypes.bool,
         handleOnBlockClicked: PropTypes.func,
         handleOnRestartGame: PropTypes.func,
         handleOnSetGameScale: PropTypes.func,
         handleOnSetWinnerCondition: PropTypes.func,
+        handleOnSetIsSinglePlay: PropTypes.func,
     };
     static defaultProps = {
         gameScale: 3,
         blocks: List(),
         currentRole: 0,
         isWin: Map(),
+        isSinglePlay: true,
         handleOnBlockClicked: () => { },
         handleOnRestartGame: () => { },
         handleOnSetGameScale: () => { },
         handleOnSetWinnerCondition: () => { },
+        handleOnSetIsSinglePlay: () => { },
     }
     handleOnClick = (event) => {
         const { blocks, currentRole, handleOnBlockClicked } = this.props;
@@ -94,12 +101,19 @@ class TicTacToe extends React.Component {
         const { handleOnRestartGame } = this.props;
         handleOnRestartGame();
     }
+    handleOnToggleSwitchClick = () => {
+        const {
+            handleOnSetIsSinglePlay,
+        } = this.props;
+        handleOnSetIsSinglePlay();
+    }
 
     render() {
         const {
             gameScale,
             blocks,
             isWin,
+            isSinglePlay,
         } = this.props;
 
         return (
@@ -135,6 +149,7 @@ class TicTacToe extends React.Component {
                     </div>
                     <div className="tic-tac-toe__setting-group">
                         <span>Single Play</span>
+                        <ToggleSwitchBtn isSinglePlay={isSinglePlay} handleOnToggleSwitchClick={this.handleOnToggleSwitchClick} />
                     </div>
                 </div>
             </StyledTicTacToe>
@@ -147,6 +162,7 @@ const mapStateToProps = createStructuredSelector({
     blocks: makeSelectBlocks(),
     currentRole: makeSelectCurrentRole(),
     isWin: makeSelectIsWin(),
+    isSinglePlay: makeSelectIsSinglePlayer(),
 });
 
 const mapDispatchToProps = dispatch => ({
@@ -155,6 +171,7 @@ const mapDispatchToProps = dispatch => ({
     handleOnRestartGame: () => dispatch(setInit()),
     handleOnSetGameScale: (gameScale) => dispatch(setGameScale(gameScale)),
     handleOnSetWinnerCondition: (winnerCondition) => dispatch(setWinnerCondition(winnerCondition)),
+    handleOnSetIsSinglePlay: () => dispatch(setIsSinglePlayer()),
 });
 
 export default connect(

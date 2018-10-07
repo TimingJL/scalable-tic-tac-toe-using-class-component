@@ -22,9 +22,15 @@ const makeSelectIsWin = () =>
         tictactoeState.get('isWin'),
     );
 
+const makeSelectIsSinglePlayer = () =>
+    createSelector(selectTicTacToe, tictactoeState =>
+        tictactoeState.get('isSinglePlayer'),
+    );
+
 export {
     makeSelectGameScale,
     makeSelectBlocks,
     makeSelectCurrentRole,
     makeSelectIsWin,
+    makeSelectIsSinglePlayer,
 };
