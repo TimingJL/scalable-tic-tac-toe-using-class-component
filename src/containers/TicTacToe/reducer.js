@@ -43,14 +43,12 @@ function tictactoeReducer(state = initialState, action) {
         }
 
         case SET_GAME_SCALE: {
-            return state
-                .set('gameScale', action.payload);
+            return state.set('gameScale', action.payload);
         }
 
         case SET_WINNER_CONDITION: {
             const winnerCondition = action.payload;
-            return state
-                .set('winnerCondition', winnerCondition);
+            return state.set('winnerCondition', winnerCondition);
         }
 
         case SET_WINNER: {

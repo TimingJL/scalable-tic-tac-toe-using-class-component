@@ -6,6 +6,8 @@ export const StyledInfoBoard = styled.div`
     height: ${SIZE}px;
     background: #ffffff5e;
     margin: 10px 0px;
+    text-shadow: 2px 0px white;
+    font-weight: 900;
     .info-board__game-finished {
         display: grid;
         grid-template-columns: 3fr ${SIZE}px 1fr;

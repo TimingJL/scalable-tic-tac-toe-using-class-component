@@ -61,7 +61,7 @@ const getWinCase = (blocks, arrs, winnerCondition) => {
         }
     });
     return result;
-}
+};
 
 const rowCheck = (blocks, gameScale, winnerCondition) => {
     const loop = _.range(0, gameScale);
@@ -69,7 +69,7 @@ const rowCheck = (blocks, gameScale, winnerCondition) => {
         return _.range(item * gameScale, (item * gameScale) + gameScale);
     });
     return getWinCase(blocks, arrs, winnerCondition);
-}
+};
 
 const colCheck = (blocks, gameScale, winnerCondition) => {
     const loop = _.range(0, gameScale);
@@ -77,7 +77,7 @@ const colCheck = (blocks, gameScale, winnerCondition) => {
         return _.range(item, item + gameScale * (gameScale - 1) + 1, gameScale);
     });
     return getWinCase(blocks, arrs, winnerCondition);
-}
+};
 
 const forwardSlashCheck = (blocks, gameScale, winnerCondition) => { /* / */
     const firstHeaders = _.range(0, gameScale);
@@ -90,10 +90,10 @@ const forwardSlashCheck = (blocks, gameScale, winnerCondition) => { /* / */
     ));
     const arrs = [...firstArr, ...secondArr];
     return getWinCase(blocks, arrs, winnerCondition);
-}
+};
 
 const backSlashCheck = (blocks, gameScale, winnerCondition) => { /* \ */
-    const firstHeaders = _.range(0, gameScale).sort((a,b) => b - a);
+    const firstHeaders = _.range(0, gameScale).sort((a, b) => b - a);
     const secondHeaders = _.range(gameScale, gameScale * (gameScale - 1) + 1, gameScale);
     const firstArr = firstHeaders.map((header, index) => (
         _.range(header, (index + 1) * gameScale, gameScale + 1)
@@ -103,7 +103,7 @@ const backSlashCheck = (blocks, gameScale, winnerCondition) => { /* \ */
     ));
     const arrs = [...firstArr, ...secondArr];
     return getWinCase(blocks, arrs, winnerCondition);
-}
+};
 
 export const getWinner = (blocks, gameScale, winnerCondition) => {
     let winner;
@@ -115,12 +115,12 @@ export const getWinner = (blocks, gameScale, winnerCondition) => {
     const backSlashResult = backSlashCheck(blocks, gameScale, winnerCondition);
     const results = [rowResult, colResult, forwardSlashResult, backSlashResult];
     results.forEach((result) => {
-        if(result[CIRCLE].length) {
+        if (result[CIRCLE].length) {
             winCaseArr.push(...result[CIRCLE]);
             winner = CIRCLE;
             isGameFinished = true;
         }
-        if(result[CROSS].length) {
+        if (result[CROSS].length) {
             winCaseArr.push(...result[CROSS]);
             winner = CROSS;
             isGameFinished = true;
@@ -134,4 +134,13 @@ export const getWinner = (blocks, gameScale, winnerCondition) => {
         winCaseArr,
         isGameFinished,
     };
-}
+};
+
+/* Random Algorithm */
+export const getBlockId = blocks => {
+    const enableBlocks = blocks.filter(block => block.get('owner') === undefined);
+    const choosedId = enableBlocks
+        .get(Math.floor(Math.random() * enableBlocks.size))
+        .get('id');
+    return choosedId;
+};
