@@ -1,9 +1,14 @@
 import React from 'react';
+import {
+    StyledCircle,
+} from './Styled';
 
-const Circle = () => (
-    <div className="tic-tac-toe__circle-wrapper">
-        <span className="circle" />
-    </div>
+const Circle = ({ theme }) => (
+    <StyledCircle theme={theme}>
+        <div className="circle__wrapper">
+            <span className="circle__circle" />
+        </div>
+    </StyledCircle>
 );
 
 export default Circle;

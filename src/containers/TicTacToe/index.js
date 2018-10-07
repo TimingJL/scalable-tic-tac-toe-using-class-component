@@ -31,14 +31,17 @@ import WinnerConditionSelection from './components/WinnerConditionSelection';
 import ToggleSwitchBtn from './components/ToggleSwitchBtn';
 import InfoBoard from './components/InfoBoard';
 
-const showContent = (value) => {
+const showContent = (value, gameScale) => {
+    const theme = {
+        scaleFactor: gameScale,
+    };
     if (value === CIRCLE) {
-        return <Circle />
+        return <Circle theme={theme} />
     } else if (value === CROSS) {
-        return <Cross />
+        return <Cross theme={theme} />
     }
     return null;
-}
+};
 
 const blockStyle = (id, winCaseArrs) => {
     let isWinnerBlock = false;
@@ -130,7 +133,7 @@ class TicTacToe extends React.Component {
                                 className={blockStyle(block.get('id'), isWin.get('winCaseArr'))}
                                 onClick={isWin.get('isGameFinished') ? () => { } : this.handleOnClick}
                             >
-                                {showContent(block.get('owner'))}
+                                {showContent(block.get('owner'), gameScale)}
                             </div>
                         ))
                     }

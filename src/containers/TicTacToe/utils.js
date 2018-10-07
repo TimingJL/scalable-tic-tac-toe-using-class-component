@@ -126,6 +126,9 @@ export const getWinner = (blocks, gameScale, winnerCondition) => {
             isGameFinished = true;
         }
     });
+    if (!blocks.find((block) => block.get('owner') === undefined)) {
+        isGameFinished = true;
+    }
     return {
         winner,
         winCaseArr,

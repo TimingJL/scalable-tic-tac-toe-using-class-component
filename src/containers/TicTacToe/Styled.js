@@ -64,25 +64,6 @@ export const StyledTicTacToe = styled.div`
     .tic-tac-toe__item-win {
         animation: ${winnerBackground} 0.5s linear infinite alternate;
     }
-    .tic-tac-toe__circle-wrapper {
-        height: 80%;
-        width: 80%;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        .circle {
-            width: 100%;
-            height: 100%;
-            ${(props) => {
-                const gameScale = props.gameScale;
-                return `
-                    border: ${ 4.5 / gameScale }em solid white;
-                `;
-            }}
-            box-sizing: border-box;
-            border-radius: 100%;
-        }
-    }
     .tic-tac-toe__cross-wrapper {
         height: 80%;
         width: 80%;
