@@ -117,6 +117,7 @@ export const StyledTicTacToe = styled.div`
         grid-template-rows: repeat(2, 40px);
         justify-content: space-between;
         font-family: 'Rammetto One', cursive;
+        margin-bottom: 10px;
     }
     .tic-tac-toe__setting-group {
         display: flex;
