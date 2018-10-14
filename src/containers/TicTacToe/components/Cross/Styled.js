@@ -11,18 +11,8 @@ const crossMixin = (scaleFactor, angle) => `
 `;
 
 export const StyledCross = styled.div`
-    width: 100%;
-    height: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    .cross__cross-wrapper {
-        height: 80%;
-        width: 80%;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-    }
+    width: 80%;
+    height: 80%;
     .cross__cross {
         position: relative;
         width: 100%;

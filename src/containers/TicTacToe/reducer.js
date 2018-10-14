@@ -9,8 +9,7 @@ import {
     SET_IS_SINGLE_PLAYER,
     TOGGLE,
     PLAYER_1,
-    DEFAULT_NUM_OF_BLOCK,
-    DEFAULT_CONDITION,
+    DEFAULT_GAME_SCALE,
     DEFAULT_WINNER_CONDITION,
 } from './constants';
 
@@ -21,7 +20,7 @@ const defaultIsWin = {
 };
 
 const initialState = fromJS({
-    gameScale: DEFAULT_NUM_OF_BLOCK,
+    gameScale: DEFAULT_GAME_SCALE,
     winnerCondition: DEFAULT_WINNER_CONDITION,
     blocks: null,
     currentRole: PLAYER_1,
@@ -36,19 +35,21 @@ function tictactoeReducer(state = initialState, action) {
         }
 
         case SET_BLOCK_VALUE: {
-            const { id, currentRole } = action.payload;
+            const id = action.payload;
+            const currentRole = state.get('currentRole');
             return state
                 .setIn(['blocks', id, 'owner'], currentRole)
                 .set('currentRole', currentRole * TOGGLE);
         }
 
         case SET_GAME_SCALE: {
-            return state.set('gameScale', action.payload);
+            const updatedState = state.set('gameScale', action.payload);
+            return setInit(updatedState);
         }
 
         case SET_WINNER_CONDITION: {
-            const winnerCondition = action.payload;
-            return state.set('winnerCondition', winnerCondition);
+            const updatedState = state.set('winnerCondition', action.payload);
+            return setInit(updatedState);
         }
 
         case SET_WINNER: {
@@ -68,7 +69,7 @@ const setInit = (state) => {
     const isSinglePlayer = state.get('isSinglePlayer');
     const gameScale = state.get('gameScale');
     const winnerCondition = state.get('winnerCondition') > gameScale ?
-        DEFAULT_CONDITION : state.get('winnerCondition');
+        DEFAULT_WINNER_CONDITION : state.get('winnerCondition');
     const initBlocks = fromJS(
         Array.from(new Array(gameScale * gameScale), (value, index) => ({
             id: index,

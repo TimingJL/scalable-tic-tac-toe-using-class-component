@@ -1,11 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Map } from 'immutable';
 import Circle from 'containers/TicTacToe/components/Circle';
 import Cross from 'containers/TicTacToe/components/Cross';
 import {
     CIRCLE,
     CROSS,
+    PLAYER_1,
 } from 'containers/TicTacToe/constants';
 import {
     StyledInfoBoard,
@@ -28,8 +28,8 @@ const InfoBoard = ({ currentRole, isWin }) => {
         if (isWin.get('winner')) {
             return (
                 <StyledInfoBoard>
-                    <div className="info-board__game-finished">
-                        <span className="info-board__player-info-label">獲勝者是</span>
+                    <span className="info-board__label">獲勝者是</span>
+                    <div className="info-board__content-wrapper">
                         {showContent(isWin.get('winner'))}
                     </div>
                 </StyledInfoBoard>
@@ -37,30 +37,28 @@ const InfoBoard = ({ currentRole, isWin }) => {
         }
         return (
             <StyledInfoBoard>
-                <div className="info-board__game-finished-nowinner">
-                    <span className="info-board__player-info-label">平手</span>
-                </div>
+                <span className="info-board__label">平手</span>
             </StyledInfoBoard>
         );
     }
     return (
         <StyledInfoBoard>
-            <div className="info-board__player-info">
-                <span className="info-board__player-info-label">輪到</span>
+            <span className="info-board__label">輪到</span>
+            <div className="info-board__content-wrapper">
                 {showContent(currentRole)}
             </div>
         </StyledInfoBoard>
     );
-}
+};
 
 InfoBoard.propTypes = {
     currentRole: PropTypes.number,
-    isWin: PropTypes.instanceOf(Map),
+    isWin: PropTypes.object,
 };
 
 InfoBoard.defaultProps = {
-    currentRole: 1,
-    isWin: Map(),
+    currentRole: PLAYER_1,
+    isWin: null,
 };
 
 export default InfoBoard;

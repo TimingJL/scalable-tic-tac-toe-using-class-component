@@ -4,36 +4,26 @@ const SIZE = 100;
 
 export const StyledInfoBoard = styled.div`
     height: ${SIZE}px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     background: #ffffff5e;
     margin: 10px 0px;
-    text-shadow: 2px 0px white;
     font-weight: 900;
-    .info-board__game-finished {
-        display: grid;
-        grid-template-columns: 3fr ${SIZE}px 1fr;
+    text-shadow: 2px 0px white;
+    .info-board__content-wrapper {
+        height: ${SIZE}px;
+        width: ${SIZE}px;
+        display: flex;
         justify-content: center;
         align-items: center;
-        height: 100%;
-        text-align: center;
     }
-    .info-board__game-finished-nowinner {
-        display: grid;
-        grid-template-columns: 1fr;
-        justify-content: center;
-        align-items: center;
-        height: 100%;
-        text-align: center;
-    }
-    .info-board__player-info {
-        display: grid;
-        grid-template-columns: 4fr ${SIZE}px 3fr;
-        justify-content: center;
-        align-items: center;
-        height: 100%;
-        text-align: center;
-    }
-    .info-board__player-info-label {
-        font-size: 2em;
-        letter-spacing: 5px;
+    .info-board__label {
+        font-size: 3em;
+        @media only screen and (max-width: 600px) {
+            font-size: 2em;
+        }
+        letter-spacing: 15px;
+        margin: 0px 20px;
     }
 `;

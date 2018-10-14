@@ -1,28 +1,15 @@
 import { Observable } from 'rxjs/Rx';
 import { getWinner, getBlockId } from 'containers/TicTacToe/utils';
 import {
-    SET_GAME_SCALE,
-    SET_WINNER_CONDITION,
     SET_BLOCK_VALUE,
     SET_WINNER,
     SET_IS_SINGLE_PLAYER,
     CROSS,
 } from './constants';
 import {
-    setInit,
     setWinner,
     setBlockValue,
 } from './actions';
-
-const setGameScaleInitEpic = (action$, store) =>
-    action$.ofType(SET_GAME_SCALE).switchMap(() => {
-        return Observable.of(setInit());
-    });
-
-const setWinnerConditionInitEpic = (action$, store) =>
-    action$.ofType(SET_WINNER_CONDITION).switchMap(() => {
-        return Observable.of(setInit());
-    });
 
 const setIsWinEpic = (action$, store) =>
     action$.ofType(SET_BLOCK_VALUE).switchMap(() => {
@@ -37,17 +24,17 @@ const setIsWinEpic = (action$, store) =>
 const setSinglePlayEpic = (action$, store) =>
     action$
         .ofType(SET_WINNER)
-        .debounceTime(300)
+        .debounceTime(300)  // 讓電腦不要馬上下棋，停頓一下，讓玩家覺得電腦好像在思考
         .switchMap(() => {
             const tictactoeState = store.value.get('tictactoe');
             if (
-                tictactoeState.get('isSinglePlayer') &&
-                tictactoeState.get('currentRole') === CROSS &&
-                !tictactoeState.getIn(['isWin', 'isGameFinished'])
+                tictactoeState.get('isSinglePlayer') &&                 // 目前模式是否為電腦下棋
+                tictactoeState.get('currentRole') === CROSS &&          // 是否輪到電腦的角色，也就是叉叉
+                !tictactoeState.getIn(['isWin', 'isGameFinished'])      // 目前遊戲是否結束？若結束就無法再下棋
             ) {
-                const id = getBlockId(tictactoeState.get('blocks'));
+                const id = getBlockId(tictactoeState.get('blocks'));    // 由電腦來挑選出一個格子
                 const currentRole = CROSS;
-                return Observable.of(setBlockValue(id, currentRole));
+                return Observable.of(setBlockValue(id, currentRole));   // 發送action到reducer，把狀態記錄下來
             }
             return Observable.empty();
         });
@@ -60,8 +47,6 @@ const setOnPlayModeToggle = (action$, store) =>
     });
 
 export default [
-    setGameScaleInitEpic,
-    setWinnerConditionInitEpic,
     setIsWinEpic,
     setSinglePlayEpic,
     setOnPlayModeToggle,

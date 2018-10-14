@@ -3,6 +3,11 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 import { List, Map } from 'immutable';
+import _ from 'lodash';
+
+import {
+    DEFAULT_GAME_SCALE,
+} from 'containers/TicTacToe/constants';
 
 import { StyledTicTacToe } from './Styled';
 import {
@@ -11,6 +16,8 @@ import {
     makeSelectCurrentRole,
     makeSelectIsWin,
     makeSelectIsSinglePlayer,
+    makeSelectGameScaleOptions,
+    makeSelectWinnerConditionOptions,
 } from './selectors';
 import {
     setBlockValue,
@@ -26,8 +33,7 @@ import {
 
 import Circle from './components/Circle';
 import Cross from './components/Cross';
-import GameScaleSelection from './components/GameScaleSelection';
-import WinnerConditionSelection from './components/WinnerConditionSelection';
+import Selection from './components/Selection';
 import ToggleSwitchBtn from './components/ToggleSwitchBtn';
 import InfoBoard from './components/InfoBoard';
 
@@ -66,6 +72,8 @@ class TicTacToe extends React.Component {
         currentRole: PropTypes.number,
         isWin: PropTypes.instanceOf(Map),
         isSinglePlay: PropTypes.bool,
+        gameScaleOptions: PropTypes.array,
+        winnerConditionOptions: PropTypes.array,
         handleOnBlockClicked: PropTypes.func,
         handleOnRestartGame: PropTypes.func,
         handleOnSetGameScale: PropTypes.func,
@@ -73,11 +81,13 @@ class TicTacToe extends React.Component {
         handleOnSetIsSinglePlay: PropTypes.func,
     };
     static defaultProps = {
-        gameScale: 3,
+        gameScale: DEFAULT_GAME_SCALE,
         blocks: List(),
         currentRole: 0,
         isWin: Map(),
         isSinglePlay: true,
+        gameScaleOptions: [],
+        winnerConditionOptions: [],
         handleOnBlockClicked: () => { },
         handleOnRestartGame: () => { },
         handleOnSetGameScale: () => { },
@@ -85,10 +95,10 @@ class TicTacToe extends React.Component {
         handleOnSetIsSinglePlay: () => { },
     }
     handleOnClick = (event) => {
-        const { blocks, currentRole, handleOnBlockClicked } = this.props;
+        const { blocks, handleOnBlockClicked } = this.props;
         const id = event.currentTarget.getAttribute('data-id');
         if (!blocks.getIn([id, 'owner'])) {
-            handleOnBlockClicked(id, currentRole);
+            handleOnBlockClicked(id);
         }
     }
     handleOnGameScaleSelected = (event) => {
@@ -100,10 +110,6 @@ class TicTacToe extends React.Component {
         const { handleOnSetWinnerCondition } = this.props;
         const winnerCondition = parseInt(event.target.value, 10);
         handleOnSetWinnerCondition(winnerCondition);
-    }
-    handleOnRestart = () => {
-        const { handleOnRestartGame } = this.props;
-        handleOnRestartGame();
     }
     handleOnToggleSwitchClick = () => {
         const {
@@ -119,7 +125,10 @@ class TicTacToe extends React.Component {
             isWin,
             isSinglePlay,
             currentRole,
+            winnerConditionOptions,
+            handleOnRestartGame,
         } = this.props;
+        const gameScaleOptions = _.range(DEFAULT_GAME_SCALE, 20 + 1);
 
         return (
             <StyledTicTacToe gameScale={gameScale}>
@@ -140,18 +149,18 @@ class TicTacToe extends React.Component {
                 </div>
                 <button
                     className="tic-tac-toe__restart-btn"
-                    onClick={this.handleOnRestart}
+                    onClick={handleOnRestartGame}
                 >
                     Restart
                 </button>
                 <div className="tic-tac-toe__setting-group-wrapper">
                     <div className="tic-tac-toe__setting-group">
                         <span>Scale</span>
-                        <GameScaleSelection handleOnSelect={this.handleOnGameScaleSelected} />
+                        <Selection options={gameScaleOptions} handleOnSelect={this.handleOnGameScaleSelected} />
                     </div>
                     <div className="tic-tac-toe__setting-group">
                         <span>Condition</span>
-                        <WinnerConditionSelection gameScale={gameScale} handleOnSelect={this.handleOnWinnerConditionSelected} />
+                        <Selection options={winnerConditionOptions} handleOnSelect={this.handleOnWinnerConditionSelected} />
                     </div>
                     <div className="tic-tac-toe__setting-group">
                         <span>Single Play</span>
@@ -169,11 +178,13 @@ const mapStateToProps = createStructuredSelector({
     currentRole: makeSelectCurrentRole(),
     isWin: makeSelectIsWin(),
     isSinglePlay: makeSelectIsSinglePlayer(),
+    gameScaleOptions: makeSelectGameScaleOptions(),
+    winnerConditionOptions: makeSelectWinnerConditionOptions(),
 });
 
 const mapDispatchToProps = dispatch => ({
-    handleOnBlockClicked: (id, currentRole) =>
-        dispatch(setBlockValue(id, currentRole)),
+    handleOnBlockClicked: (id) =>
+        dispatch(setBlockValue(id)),
     handleOnRestartGame: () => dispatch(setInit()),
     handleOnSetGameScale: (gameScale) => dispatch(setGameScale(gameScale)),
     handleOnSetWinnerCondition: (winnerCondition) => dispatch(setWinnerCondition(winnerCondition)),

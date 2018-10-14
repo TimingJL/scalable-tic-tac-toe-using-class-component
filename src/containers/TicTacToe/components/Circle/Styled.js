@@ -4,13 +4,8 @@ export const StyledCircle = styled.div`
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 100%;
-    width: 100%;
-    .circle__wrapper {
-        height: 80%;
-        width: 80%;
-        display: flex;
-    }
+    height: 80%;
+    width: 80%;
     .circle__circle {
         width: 100%;
         height: 100%;

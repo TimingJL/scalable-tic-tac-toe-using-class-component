@@ -13,6 +13,5 @@ export const TOGGLE = -1;
 export const PLAYER_1 = CIRCLE;
 
 export const GAME_WRAPPER_SIZE = 600;
-export const DEFAULT_NUM_OF_BLOCK = 3;
-export const DEFAULT_CONDITION = 3;
+export const DEFAULT_GAME_SCALE = 3;
 export const DEFAULT_WINNER_CONDITION = 3;

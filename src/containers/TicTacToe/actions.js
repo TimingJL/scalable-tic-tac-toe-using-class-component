@@ -11,12 +11,9 @@ export const setInit = () => ({
     type: INIT,
 });
 
-export const setBlockValue = (id, currentRole) => ({
+export const setBlockValue = (id) => ({
     type: SET_BLOCK_VALUE,
-    payload: {
-        id,
-        currentRole,
-    },
+    payload: id,
 });
 
 export const setGameScale = (payload) => ({

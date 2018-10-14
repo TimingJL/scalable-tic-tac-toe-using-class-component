@@ -64,18 +64,18 @@ const getWinCase = (blocks, arrs, winnerCondition) => {
 };
 
 const rowCheck = (blocks, gameScale, winnerCondition) => {
-    const loop = _.range(0, gameScale);
-    const arrs = loop.map((item) => {
-        return _.range(item * gameScale, (item * gameScale) + gameScale);
-    });
+    const arrs = _.range(0, gameScale)
+        .map((item) => {
+            return _.range(item * gameScale, (item + 1) * gameScale);
+        });
     return getWinCase(blocks, arrs, winnerCondition);
 };
 
 const colCheck = (blocks, gameScale, winnerCondition) => {
-    const loop = _.range(0, gameScale);
-    const arrs = loop.map((item) => {
-        return _.range(item, item + gameScale * (gameScale - 1) + 1, gameScale);
-    });
+    const arrs = _.range(0, gameScale)
+        .map((item) => {
+            return _.range(item, item + gameScale * (gameScale - 1) + 1, gameScale);
+        });
     return getWinCase(blocks, arrs, winnerCondition);
 };
 
