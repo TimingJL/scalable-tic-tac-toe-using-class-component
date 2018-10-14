@@ -10,6 +10,7 @@ import {
 import {
     StyledInfoBoard,
 } from './Styled';
+import gtag from '../../../../utils/tracking';
 
 const showContent = (value) => {
     const theme = {
@@ -26,6 +27,11 @@ const showContent = (value) => {
 const InfoBoard = ({ currentRole, isWin }) => {
     if (isWin.get('isGameFinished')) {
         if (isWin.get('winner')) {
+            const role = isWin.get('winner') === CIRCLE ? 'CIRCLE' :'CROSS';
+            gtag('event', 'InfoBoard', {
+                'event_category': `${role} win`,
+                'event_label': isWin.get('winCaseArr').toJS(),
+            });
             return (
                 <StyledInfoBoard>
                     <span className="info-board__label">獲勝者是</span>
@@ -35,6 +41,10 @@ const InfoBoard = ({ currentRole, isWin }) => {
                 </StyledInfoBoard>
             );
         }
+        gtag('event', 'InfoBoard', {
+            'event_category': '平手',
+            'event_label': isWin.get('winCaseArr').toJS(),
+        });
         return (
             <StyledInfoBoard>
                 <span className="info-board__label">平手</span>

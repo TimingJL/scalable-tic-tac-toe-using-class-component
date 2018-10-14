@@ -36,6 +36,7 @@ import Cross from './components/Cross';
 import Selection from './components/Selection';
 import ToggleSwitchBtn from './components/ToggleSwitchBtn';
 import InfoBoard from './components/InfoBoard';
+import gtag from '../../utils/tracking';
 
 const showContent = (value, gameScale) => {
     const theme = {
@@ -98,24 +99,48 @@ class TicTacToe extends React.Component {
         const { blocks, handleOnBlockClicked } = this.props;
         const id = event.currentTarget.getAttribute('data-id');
         if (!blocks.getIn([id, 'owner'])) {
+            gtag('event', 'onClick Block', {
+                'event_category': 'id',
+                'event_label': id,
+            });
             handleOnBlockClicked(id);
         }
     }
     handleOnGameScaleSelected = (event) => {
         const { handleOnSetGameScale } = this.props;
         const gameScale = parseInt(event.target.value, 10);
+        gtag('event', 'Selection', {
+            'event_category': 'gameScale',
+            'event_label': gameScale,
+        });
         handleOnSetGameScale(gameScale);
     }
     handleOnWinnerConditionSelected = (event) => {
         const { handleOnSetWinnerCondition } = this.props;
         const winnerCondition = parseInt(event.target.value, 10);
+        gtag('event', 'Selection', {
+            'event_category': 'winnerCondition',
+            'event_label': winnerCondition,
+        });
         handleOnSetWinnerCondition(winnerCondition);
     }
     handleOnToggleSwitchClick = () => {
         const {
+            isSinglePlay,
             handleOnSetIsSinglePlay,
         } = this.props;
+        gtag('event', 'ToggleSwitch', {
+            'event_category': 'isSinglePlay',
+            'event_label': !isSinglePlay,
+        });
         handleOnSetIsSinglePlay();
+    }
+    handleOnRestartClick = () => {
+        const {
+            handleOnRestartGame,
+        } = this.props;
+        gtag('event', 'restart');
+        handleOnRestartGame();
     }
 
     render() {
@@ -126,7 +151,6 @@ class TicTacToe extends React.Component {
             isSinglePlay,
             currentRole,
             winnerConditionOptions,
-            handleOnRestartGame,
         } = this.props;
         const gameScaleOptions = _.range(DEFAULT_GAME_SCALE, 20 + 1);
 
@@ -149,7 +173,7 @@ class TicTacToe extends React.Component {
                 </div>
                 <button
                     className="tic-tac-toe__restart-btn"
-                    onClick={handleOnRestartGame}
+                    onClick={this.handleOnRestartClick}
                 >
                     Restart
                 </button>
