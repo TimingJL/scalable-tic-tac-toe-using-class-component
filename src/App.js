@@ -11,7 +11,7 @@ class App extends Component {
     return (
       <div className="App">
         <TicTacToe />
-        <GithubCorner bannerColor={THEME_DARKEN} href="https://github.com/TimingJL/tic-tac-toe" />
+        <GithubCorner size={60} bannerColor={THEME_DARKEN} href="https://github.com/TimingJL/tic-tac-toe" />
       </div>
     );
   }
